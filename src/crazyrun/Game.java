@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 public class Game extends JPanel {
 
-	public static final int WIDTH = 100;
+	public static final int WIDTH = 600;
 	public static final int HEIGHT = 800;
 	public static final int SCORE_HEIGHT = 120;
 	
