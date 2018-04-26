@@ -9,8 +9,8 @@ import javax.swing.Timer;
 
 public class Game extends JPanel {
 
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 100;
+	public static final int HEIGHT = 800;
 	public static final int SCORE_HEIGHT = 120;
 	
 	// game objects
@@ -18,8 +18,7 @@ public class Game extends JPanel {
 
 	
 	public Game() {
-		player = new Player(WIDTH / 2, (HEIGHT - (player.getSize())), 40, Color.BLUE);
-		
+		player = new Player(WIDTH / 2 - 20, HEIGHT - 40, 40, Color.BLACK);
 	}
 	
 	@Override
