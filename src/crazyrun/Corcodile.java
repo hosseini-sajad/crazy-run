@@ -10,7 +10,7 @@ public class Corcodile {
     private Color color;
     private int x;
     private int y;
-    private int xSpeed;
+    private double xSpeed;
 
     public int getWidth() {
         return width;
@@ -52,11 +52,11 @@ public class Corcodile {
         this.y = y;
     }
 
-    public int getxSpeed() {
+    public double getxSpeed() {
         return xSpeed;
     }
 
-    public void setxSpeed(int xSpeed) {
+    public void setxSpeed(double xSpeed) {
         this.xSpeed = xSpeed;
     }
 
@@ -75,12 +75,12 @@ public class Corcodile {
     }
     
     public void moveRight(int riverWidth , int riverHeight){
-           xSpeed += 1;
+           xSpeed += 0.1;
            x += xSpeed;
     }
     
     public void moveLeft(int riverWidth , int riverHeight){
-           xSpeed -= 1;
+           xSpeed -= 0.1;
            x += xSpeed;
     }
     

@@ -126,7 +126,7 @@ public class Road {
         for (Cars car : cars) {
             if(car.getX() + car.getWidth() > Game.WIDTH) {
                 cars.remove(this);
-                car.setX(-100);
+                car.setX(new Random().nextInt(1000) - (Game.WIDTH + 500));
                 car.setxSpeed(0);
             }
             car.moveRight(Game.WIDTH, Game.HEIGHT);
@@ -139,7 +139,7 @@ public class Road {
         for (Cars car : cars2) {
             if (car.getX() + car.getWidth() < (Game.WIDTH - Game.WIDTH)) {
                 cars2.remove(this);
-                car.setX(700);
+                car.setX(new Random().nextInt(200) + (Game.WIDTH));
                 car.setxSpeed(0);
             }
             car.moveLeft(Game.WIDTH, Game.HEIGHT);
