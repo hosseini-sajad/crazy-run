@@ -120,6 +120,7 @@ public class Road {
     }
     
     public void move() {
+        //move right
         //check if cars went out of page remove it and back with new (x)
         int i = 0;
         for (Cars car : cars) {
@@ -132,10 +133,11 @@ public class Road {
             i++;
         }
 
+        //move left
         //check if cars went out of page remove it and back with new (x)
         int j = 0;
         for (Cars car : cars2) {
-            if (car.getX() + car.getWidth() < 0) {
+            if (car.getX() + car.getWidth() < (Game.WIDTH - Game.WIDTH)) {
                 cars2.remove(this);
                 car.setX(700);
                 car.setxSpeed(0);
@@ -145,3 +147,4 @@ public class Road {
         }
     }
 }
+//(Game.WIDTH - 450)- (Game.WIDTH + 80) - 430

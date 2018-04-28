@@ -11,7 +11,6 @@ public class Game extends JPanel implements ActionListener{
 
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 800;
-	public static final int SCORE_HEIGHT = 120;
         public static final int ROAD_HEIGHT = 220;
         
 	
@@ -22,7 +21,7 @@ public class Game extends JPanel implements ActionListener{
         
         
 	public Game() {
-		player = new Player(WIDTH / 2 - 20, HEIGHT - 40, 40, Color.BLACK);
+		player = new Player(280, 760, 40, Color.WHITE);
                 road = new Road(0, HEIGHT - 350, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
                 timer = new Timer(30, this);
 		timer.start();

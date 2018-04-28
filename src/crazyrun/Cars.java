@@ -17,7 +17,7 @@ public class Cars {
         setWidth(width);
         setHeight(height);
         setColor(color);
-        xSpeed = 0;
+        setxSpeed(0);
     }
 
     public double getxSpeed() {
