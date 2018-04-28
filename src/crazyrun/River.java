@@ -73,14 +73,14 @@ public class River {
         for (int i = 0; i < 3; i++) {
             int randX = rand.nextInt(900);
             int randY = rand.nextInt(170)+70;
-            Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , new Color(50, 80, 200, 255));
+            Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , Color.green);
             corcodiles.add(corcodile);
         }
         
         for (int i = 0; i < 3; i++) {
             int randX = rand.nextInt(900);
             int randY = rand.nextInt(170)+70;
-            Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , new Color(50, 80, 200, 255));
+            Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , Color.green);
             corcodiles2.add(corcodile);
         }
         
