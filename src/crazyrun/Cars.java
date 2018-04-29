@@ -75,11 +75,11 @@ public class Cars {
     
     public void moveRight(int gameWidth, int gameHeight) {
         xSpeed += 0.2;
-        x += xSpeed;
+        x += getxSpeed();
     }
     
     public void moveLeft(int gameWidth, int gameHeight) {
         xSpeed -= 0.2;
-        x += xSpeed;
+        x += getxSpeed();
     }
 }

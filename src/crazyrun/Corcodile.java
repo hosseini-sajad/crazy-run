@@ -76,12 +76,12 @@ public class Corcodile {
     
     public void moveRight(int riverWidth , int riverHeight){
            xSpeed += 0.1;
-           x += xSpeed;
+           x += getxSpeed();
     }
     
     public void moveLeft(int riverWidth , int riverHeight){
            xSpeed -= 0.1;
-           x += xSpeed;
+           x += getxSpeed();
     }
     
 }
