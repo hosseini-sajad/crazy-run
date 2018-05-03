@@ -124,7 +124,7 @@ public class Road {
         //check if cars went out of page remove it and back with new (x)
         int i = 0;
         for (Cars car : cars) {
-            if(car.getX() + car.getWidth() > Game.WIDTH) {
+            if(car.getX() > Game.WIDTH) {
                 cars.remove(this);
                 car.setX(new Random().nextInt(1000) - (Game.WIDTH + 500));
                 car.setxSpeed(0);
