@@ -25,20 +25,26 @@ public class Road {
         
         
             for (int i = 0; i < 3; i++) {
+                float r = new Random().nextFloat();
+                float g = new Random().nextFloat();
+                float b = new Random().nextFloat();
                 Cars car = new Cars(new Random().nextInt(590)
                         , new Random().nextInt((Game.HEIGHT - 280) - 470) + 470
                         , new Random().nextInt(80 - 30) + 30
                         , 20
-                        , Color.orange);
+                        , new Color(r, g, b));
                 
                 cars.add(car);
             }
                 for (int j = 0; j < 3; j++) {
+                    float r = new Random().nextFloat();
+                    float g = new Random().nextFloat();
+                    float b = new Random().nextFloat();
                     Cars car2 = new Cars(new Random().nextInt(590)
                             , new Random().nextInt((Game.HEIGHT - 180) - (Game.HEIGHT - 230)) + 570
                             , new Random().nextInt(80 - 30) + 30
                             , 20
-                            , Color.orange);
+                            , new Color(r, g, b));
                     
                     cars2.add(car2);
                 }
@@ -128,6 +134,10 @@ public class Road {
                 cars.remove(this);
                 car.setX(new Random().nextInt(1000) - (Game.WIDTH + 500));
                 car.setxSpeed(0);
+                float r = new Random().nextFloat();
+                float g = new Random().nextFloat();
+                float b = new Random().nextFloat();
+                car.setColor(new Color(r, g, b));
             }
             car.moveRight(Game.WIDTH, Game.HEIGHT);
             i++;
@@ -141,6 +151,10 @@ public class Road {
                 cars2.remove(this);
                 car.setX(new Random().nextInt(200) + (Game.WIDTH));
                 car.setxSpeed(0);
+                float r = new Random().nextFloat();
+                float g = new Random().nextFloat();
+                float b = new Random().nextFloat();
+                car.setColor(new Color(r, g, b));
             }
             car.moveLeft(Game.WIDTH, Game.HEIGHT);
             j++;
