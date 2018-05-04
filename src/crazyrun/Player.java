@@ -2,12 +2,15 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Player {
     private int x;
     private int y;
     private int size;
     private Color color;
+    private int xSpeed;
+    private int ySpeed = 8;
 
     public Player(int x, int y, int size, Color color) {
         setX(x);
@@ -51,5 +54,19 @@ public class Player {
     public void draw(Graphics g) {
         g.setColor(getColor());
         g.fillRect(getX(), getY(), getSize(), getSize());
+    }
+    
+    public Rectangle getBound(){
+        return new Rectangle(getX(), getY(), getSize(), getSize());
+    }
+    
+    public void moveUp(){
+        if(getY() > 0)
+            y -= ySpeed;
+    }
+    
+    public void moveDown(){
+        if(getY()< Game.HEIGHT && getY() + getSize() != Game.HEIGHT)
+            y += ySpeed;
     }
 }

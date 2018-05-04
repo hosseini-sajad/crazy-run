@@ -7,14 +7,12 @@ import java.util.Random;
 
 public class River {
     private int x;
-
-   
     private int y;
     private int width ;
     private int height;
     private Color riverColor;
-    private  ArrayList<Corcodile> corcodiles = new ArrayList<Corcodile>();
-    private  ArrayList<Corcodile> corcodiles2 = new ArrayList<Corcodile>();
+    private final ArrayList<Corcodile> corcodiles = new ArrayList<Corcodile>();
+    private final ArrayList<Corcodile> corcodiles2 = new ArrayList<Corcodile>();
 
     public int getX() {
         return x;
@@ -59,6 +57,10 @@ public class River {
     public ArrayList<Corcodile> getCorcodiles() {
         return corcodiles;
     }
+    
+    public ArrayList<Corcodile> getCorcodiles2() {
+        return corcodiles2;
+    }
 
     // getting random number for corcodile place 
     Random rand = new Random();
@@ -72,14 +74,15 @@ public class River {
         
         for (int i = 0; i < 3; i++) {
             int randX = rand.nextInt(900);
-            int randY = rand.nextInt(170)+70;
+            int randY = rand.nextInt(200)+70;
+            
             Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , Color.green);
             corcodiles.add(corcodile);
         }
         
         for (int i = 0; i < 3; i++) {
             int randX = rand.nextInt(900);
-            int randY = rand.nextInt(170)+70;
+            int randY = rand.nextInt(200)+70;
             Corcodile corcodile = new Corcodile(100 , 20 , randX , randY , Color.green);
             corcodiles2.add(corcodile);
         }
@@ -103,12 +106,18 @@ public class River {
         
         // moving right
         for (int i = 0; i < corcodiles.size(); i++) {
-            if(corcodiles.get(i).getX() + corcodiles.get(i).getWidth() > Game.WIDTH ) {
+            
+            // change if condition beacause corcodile removed when x + corcodile(width) = gameWidth and its not true.
+            // set random Y for corcodile 
+            if(corcodiles.get(i).getX() > Game.WIDTH ) {
                 corcodiles.get(i).setX(rand.nextInt(1000)- (Game.WIDTH + 500));
                 corcodiles.get(i).setxSpeed(0);
+                
+                // set random Y but it has problem where random number is upper than 200.
+                corcodiles.get(i).setY(rand.nextInt(200) + 70);
+                
             }
             else{
-                
                 corcodiles.get(i).moveRight(width, height);
             }
             
@@ -116,16 +125,24 @@ public class River {
         
         // moving left
         for (int j = 0; j < corcodiles2.size(); j++) {
-            if(corcodiles2.get(j).getX() + corcodiles2.get(j).getWidth() < Game.WIDTH - Game.WIDTH ) {
+            if(corcodiles2.get(j).getX() + corcodiles2.get(j).getWidth() < 0 ) {
+                
                 corcodiles2.get(j).setX(Game.WIDTH + corcodiles2.get(j).getWidth());
                 corcodiles2.get(j).setxSpeed(0);
+               
+                // set random Y but it has problem where random number is upper than 200.
+                corcodiles2.get(j).setY(rand.nextInt(200) + 70);
             }
             else{
-                
+                 
                 corcodiles2.get(j).moveLeft(width, height);
             }
             
         }
+    }
+    
+    public River getBound(){
+        return new River (x, y, width, height, riverColor);
     }
     
 }
