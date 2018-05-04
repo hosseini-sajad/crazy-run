@@ -2,6 +2,7 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Cars {
     private double x;
@@ -10,6 +11,8 @@ public class Cars {
     private int height;
     private Color color;
     private double xSpeed;
+    private int xSpeedLeft = 8;
+    private int xSpeedRight = 8;
 
     public Cars(int x, int y, int width, int height, Color color) {
         setX(x);
@@ -67,6 +70,22 @@ public class Cars {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public int getxSpeedLeft() {
+        return xSpeedLeft;
+    }
+
+    public void setxSpeedLeft(int xSpeedLeft) {
+        this.xSpeedLeft = xSpeedLeft;
+    }
+
+    public int getxSpeedRight() {
+        return xSpeedRight;
+    }
+
+    public void setxSpeedRight(int xSpeedRight) {
+        this.xSpeedRight = xSpeedRight;
+    }
     
     public void draw(Graphics g) {
         g.setColor(getColor());
@@ -74,12 +93,14 @@ public class Cars {
     }
     
     public void moveRight(int gameWidth, int gameHeight) {
-        xSpeed += 0.2;
-        x += xSpeed;
+        x += getxSpeedRight();
     }
     
     public void moveLeft(int gameWidth, int gameHeight) {
-        xSpeed -= 0.2;
-        x += xSpeed;
+        x -= getxSpeedLeft();
+    }
+    
+    public Rectangle getBound() {
+        return new Rectangle((int) getX(), getY(), getWidth(), getHeight());
     }
 }

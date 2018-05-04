@@ -9,8 +9,8 @@ public class Player {
     private int y;
     private int size;
     private Color color;
-    private int xSpeed;
     private int ySpeed = 8;
+    private int xSpeed = 8;
 
     public Player(int x, int y, int size, Color color) {
         setX(x);
@@ -51,6 +51,14 @@ public class Player {
         this.color = color;
     }
     
+    public int getxSpeed() {
+        return xSpeed;
+    }
+
+    public void setxSpeed(int xSpeed) {
+        this.xSpeed = xSpeed;
+    }
+    
     public void draw(Graphics g) {
         g.setColor(getColor());
         g.fillRect(getX(), getY(), getSize(), getSize());
@@ -69,4 +77,14 @@ public class Player {
         if(getY()< Game.HEIGHT && getY() + getSize() != Game.HEIGHT)
             y += ySpeed;
     }
+    public void moveLeft(){
+        if(getX() > 0)
+            x -= getxSpeed();
+    }
+    
+    public void moveRight(){
+        if(getX() + getSize() < Game.WIDTH)
+            x += getxSpeed();
+    }
+    
 }

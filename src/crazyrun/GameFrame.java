@@ -14,7 +14,6 @@ public class GameFrame extends JFrame {
 		game = new Game();
 		game.setPreferredSize(new Dimension(Game.WIDTH, Game.HEIGHT));
 		add(game);
-                addKeyListener(game);
 		
 		pack();
 		
