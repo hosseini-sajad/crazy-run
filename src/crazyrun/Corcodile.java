@@ -89,6 +89,3 @@ public class Corcodile {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }
-
-
-
