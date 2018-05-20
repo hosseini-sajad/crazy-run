@@ -9,8 +9,8 @@ public class Player {
     private int y;
     private int size;
     private Color color;
-    private int ySpeed = 8;
-    private int xSpeed = 8;
+    private int ySpeed = 10;
+    private int xSpeed = 10;
 
     public Player(int x, int y, int size, Color color) {
         setX(x);
