@@ -33,7 +33,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         private ArrayList<Gift> gifts = new ArrayList<>();
         private Timer timer;
         
-        private boolean play;
+        private boolean play = true;
         private boolean hasCollision = false;
         
        

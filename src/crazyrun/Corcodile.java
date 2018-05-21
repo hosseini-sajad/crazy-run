@@ -82,43 +82,34 @@ public class Corcodile {
         setY(y);
     }
     
-    public void draw(Graphics g){
-         URL iconUrl;
+    public void draw(Graphics g) {
+        URL iconUrl;
         if (isRight) {
             iconUrl = getClass().getClassLoader().getResource("corcodileR.png");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 32, null);
-            } else {
-                g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
-        }
-        else{
+        } else {
             iconUrl = getClass().getClassLoader().getResource("corcodileL.png");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 32, null);
-            } else {
-                g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
+        }
+        if (iconUrl != null) {
+            ImageIcon icon = new ImageIcon(iconUrl);
+            Image image = icon.getImage();
+            g.drawImage(image, (int) x, y, 100, 32, null);
+        } else {
+            g.setColor(getColor());
+            g.fillRect((int) getX(), getY(), getWidth(), getHeight());
         }
     }
-    
-    public void moveRight(int riverWidth , int riverHeight){
-           xSpeed += 0.1;
-           x += getxSpeed();
+
+    public void moveRight(int riverWidth, int riverHeight) {
+        xSpeed += 0.1;
+        x += getxSpeed();
     }
-    
-    public void moveLeft(int riverWidth , int riverHeight){
-           xSpeed -= 0.1;
-           x += getxSpeed();
+
+    public void moveLeft(int riverWidth, int riverHeight) {
+        xSpeed -= 0.1;
+        x += getxSpeed();
     }
-    
-    public Rectangle getBound(){
+
+    public Rectangle getBound() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }

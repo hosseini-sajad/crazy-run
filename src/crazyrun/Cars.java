@@ -8,7 +8,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class Cars {
-    private double x;
+    private int x;
     private int y;
     private int width;
     private int height;
@@ -43,11 +43,11 @@ public class Cars {
         this.xSpeed = xSpeed;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -103,39 +103,30 @@ public class Cars {
         URL iconUrl;
         if (isRight) {
             iconUrl = getClass().getClassLoader().getResource("sport-carR.png");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 50, null);
-            } else {
-                g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
-        }
-        else{
+        }else{
             iconUrl = getClass().getClassLoader().getResource("sport-carL.png");
+        }
             if (iconUrl != null) {
                 ImageIcon icon = new ImageIcon(iconUrl);
                 Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 50, null);
+                g.drawImage(image, x, y, 100, 50, null);
             } else {
                 g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+                g.fillRect(getX(), getY(), getWidth(), getHeight());
             }
-        }
     }
     
     public void moveRight(int gameWidth, int gameHeight) {
-        xSpeed += .1;
+        xSpeed += 0.1;
         x += getxSpeedRight();
     }
     
     public void moveLeft(int gameWidth, int gameHeight) {
-        xSpeed += .1;
+        xSpeed += 0.1;
         x -= getxSpeedLeft();
     }
     
     public Rectangle getBound() {
-        return new Rectangle((int) getX(), getY(), getWidth(), getHeight());
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }
