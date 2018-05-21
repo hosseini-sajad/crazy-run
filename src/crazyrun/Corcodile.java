@@ -2,7 +2,10 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class Corcodile {
     
@@ -12,6 +15,15 @@ public class Corcodile {
     private int x;
     private int y;
     private double xSpeed;
+    private boolean isRight;
+
+    public boolean isIsRight() {
+        return isRight;
+    }
+
+    public void setIsRight(boolean isRight) {
+        this.isRight = isRight;
+    }
 
     public int getWidth() {
         return width;
@@ -71,8 +83,29 @@ public class Corcodile {
     }
     
     public void draw(Graphics g){
-        g.setColor(getColor());
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
+         URL iconUrl;
+        if (isRight) {
+            iconUrl = getClass().getClassLoader().getResource("corcodileR.png");
+            if (iconUrl != null) {
+                ImageIcon icon = new ImageIcon(iconUrl);
+                Image image = icon.getImage();
+                g.drawImage(image, (int) x, y, 100, 32, null);
+            } else {
+                g.setColor(getColor());
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+            }
+        }
+        else{
+            iconUrl = getClass().getClassLoader().getResource("corcodileL.png");
+            if (iconUrl != null) {
+                ImageIcon icon = new ImageIcon(iconUrl);
+                Image image = icon.getImage();
+                g.drawImage(image, (int) x, y, 100, 32, null);
+            } else {
+                g.setColor(getColor());
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+            }
+        }
     }
     
     public void moveRight(int riverWidth , int riverHeight){

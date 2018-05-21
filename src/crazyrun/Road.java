@@ -29,9 +29,9 @@ public class Road {
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
                 Cars car = new Cars(new Random().nextInt(590)
-                        , new Random().nextInt((Game.HEIGHT - 280) - 470) + 470
-                        , new Random().nextInt(80 - 30) + 30
-                        , 20
+                        , new Random().nextInt((Game.HEIGHT - 290) - 470) + 470
+                        , 100
+                        , 50
                         , new Color(r, g, b));
                 
                 cars.add(car);
@@ -41,9 +41,9 @@ public class Road {
                     float g = new Random().nextFloat();
                     float b = new Random().nextFloat();
                     Cars car2 = new Cars(new Random().nextInt(590)
-                            , new Random().nextInt((Game.HEIGHT - 180) - (Game.HEIGHT - 230)) + 570
-                            , new Random().nextInt(80 - 30) + 30
-                            , 20
+                            , new Random().nextInt((Game.HEIGHT - 190) - (Game.HEIGHT - 230)) + 570
+                            , 100
+                            , 50
                             , new Color(r, g, b));
                     
                     cars2.add(car2);
@@ -114,12 +114,14 @@ public class Road {
         //draw cars
         int i = 0;
         for (Cars car : cars) {
+            car.setIsRight(true);
             car.draw(g);
             i++;
         }
         
         int j = 0;
         for (Cars car : cars2) {
+            car.setIsRight(false);
             car.draw(g);
             j++;
         }

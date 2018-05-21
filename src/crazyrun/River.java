@@ -76,14 +76,14 @@ public class River {
             int randX = rand.nextInt(900);
             int randY = rand.nextInt(200)+70;
             
-            Corcodile corcodile = new Corcodile(50 , 20 , randX , randY , Color.green);
+            Corcodile corcodile = new Corcodile(100 , 32 , randX , randY , Color.green);
             corcodiles.add(corcodile);
         }
         
         for (int i = 0; i < 3; i++) {
             int randX = rand.nextInt(900);
             int randY = rand.nextInt(200)+70;
-            Corcodile corcodile = new Corcodile(50 , 20 , randX , randY , Color.green);
+            Corcodile corcodile = new Corcodile(100 , 32 , randX , randY , Color.green);
             corcodiles2.add(corcodile);
         }
         
@@ -94,10 +94,12 @@ public class River {
         g.fillRect(getX(), getY(), getWidth(), getHeight());
         
         for (int i = 0; i < corcodiles.size(); i++) {
+            corcodiles.get(i).setIsRight(true);
             corcodiles.get(i).draw(g);
         }
         
         for (int j = 0; j < corcodiles2.size(); j++) {
+            corcodiles2.get(j).setIsRight(false);
             corcodiles2.get(j).draw(g);
         }
     }
@@ -114,7 +116,7 @@ public class River {
                 corcodiles.get(i).setxSpeed(0);
                 
                 // set random Y but it has problem where random number is upper than 200.
-                corcodiles.get(i).setY(rand.nextInt(200) + 70);
+                corcodiles.get(i).setY(rand.nextInt(190) + 70);
                 
             }
             else{

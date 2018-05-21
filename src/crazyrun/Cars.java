@@ -2,7 +2,10 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class Cars {
     private double x;
@@ -13,6 +16,15 @@ public class Cars {
     private double xSpeed;
     private int xSpeedLeft = 8;
     private int xSpeedRight = 8;
+    private boolean isRight = true;
+
+    public boolean isIsRight() {
+        return isRight;
+    }
+
+    public void setIsRight(boolean isRight) {
+        this.isRight = isRight;
+    }
 
     public Cars(int x, int y, int width, int height, Color color) {
         setX(x);
@@ -88,15 +100,38 @@ public class Cars {
     }
     
     public void draw(Graphics g) {
-        g.setColor(getColor());
-        g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+        URL iconUrl;
+        if (isRight) {
+            iconUrl = getClass().getClassLoader().getResource("sport-carR.png");
+            if (iconUrl != null) {
+                ImageIcon icon = new ImageIcon(iconUrl);
+                Image image = icon.getImage();
+                g.drawImage(image, (int) x, y, 100, 50, null);
+            } else {
+                g.setColor(getColor());
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+            }
+        }
+        else{
+            iconUrl = getClass().getClassLoader().getResource("sport-carL.png");
+            if (iconUrl != null) {
+                ImageIcon icon = new ImageIcon(iconUrl);
+                Image image = icon.getImage();
+                g.drawImage(image, (int) x, y, 100, 50, null);
+            } else {
+                g.setColor(getColor());
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+            }
+        }
     }
     
     public void moveRight(int gameWidth, int gameHeight) {
+        xSpeed += .1;
         x += getxSpeedRight();
     }
     
     public void moveLeft(int gameWidth, int gameHeight) {
+        xSpeed += .1;
         x -= getxSpeedLeft();
     }
     

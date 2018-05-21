@@ -84,22 +84,39 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 //player loses
                 if(hasCollision){
                     play = false;
-                    g.setColor(Color.RED);
-                    g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-                    g.drawString("Game Over!", 20, HEIGHT / 2);
-                    g.drawString("Your Score is: " + score, 20, HEIGHT / 2 + 25);
-                    g.drawString("Please press ENTER key to restart...", 20, HEIGHT / 2 + 50);
+                    
+                    g.setColor(new Color(0, 0, 0, 170));
+                    g.fillRect(0, 0, WIDTH, HEIGHT);
+                    
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Oswald", Font.BOLD, 62));
+                    g.drawString("Game Over!", 165 , HEIGHT / 2 - 35);
+                    
+                    g.setFont(new Font("tahoma", Font.BOLD, 22));
+                    g.drawString("Your Score : " + score, 225, HEIGHT / 2 );
+                    
+                    g.setFont(new Font("tahoma", Font.BOLD, 20));
+                    g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29 );
                 }
                 
                 
                 //player wins
                 if(player.getY() + player.getSize() < river.getY()){
                     play = false;
-                    g.setColor(Color.GREEN);
-                    g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-                    g.drawString("Congradulations, You Won...", 20, HEIGHT / 2);
-                    g.drawString("Your Score is: " + score, 20, HEIGHT / 2 + 25);
-                    g.drawString("Please press ENTER key to restart...", 20, HEIGHT / 2 + 50);
+                    g.setColor(new Color(0, 0, 0, 110));
+                    g.fillRect(0, 0, WIDTH, HEIGHT);
+
+                    g.setColor(Color.decode("#00ff00"));
+                    g.setFont(new Font("Oswald", Font.BOLD, 64));
+                    g.drawString("You Won!", 185, HEIGHT / 2 - 35);
+
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("tahoma", Font.BOLD, 22));
+                    g.drawString("Your Score : " + score, 225, HEIGHT / 2);
+
+                    g.setFont(new Font("tahoma", Font.BOLD, 20));
+                    g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
+
                 }
 		
 
@@ -175,7 +192,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             player.moveLeft();
         if(e.getKeyCode() == KeyEvent.VK_RIGHT)
             player.moveRight();
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && !play) {
             restart();
         }
     }
