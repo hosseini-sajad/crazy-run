@@ -2,8 +2,11 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 public class Road {
     private int x;
@@ -23,25 +26,26 @@ public class Road {
         setHeight(height);
         setColor(color);
         
-        
+            // cars that moving right
             for (int i = 0; i < 3; i++) {
                 float r = new Random().nextFloat();
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
                 Cars car = new Cars(new Random().nextInt(590)
-                        , new Random().nextInt((Game.HEIGHT - 290) - 470) + 470
+                        , new Random().nextInt(40) + 420
                         , 100
                         , 50
                         , new Color(r, g, b));
                 
                 cars.add(car);
             }
+            // moving left
                 for (int j = 0; j < 3; j++) {
                     float r = new Random().nextFloat();
                     float g = new Random().nextFloat();
                     float b = new Random().nextFloat();
                     Cars car2 = new Cars(new Random().nextInt(590)
-                            , new Random().nextInt((Game.HEIGHT - 190) - (Game.HEIGHT - 230)) + 570
+                            , new Random().nextInt(30) + 570
                             , 100
                             , 50
                             , new Color(r, g, b));
@@ -99,17 +103,11 @@ public class Road {
     }
     
     public void draw(Graphics g) {
-        // draw road
-        g.setColor(getColor());
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
-        
-        //draw two line side of road
-        g.setColor(Color.white);
-        g.fillRect(getX(), Game.HEIGHT - 340, Game.WIDTH, 10);
-        g.fillRect(getX(), Game.HEIGHT - 150, Game.WIDTH, 10);
-        
-        //draw the middle line of road
-            g.fillRect(getX(), Game.HEIGHT - 250, Game.WIDTH, 10);
+        URL iconUrl;
+        iconUrl = getClass().getClassLoader().getResource("road3.png");
+        ImageIcon icon = new ImageIcon(iconUrl);
+        Image image = icon.getImage();
+        g.drawImage(image, getX(), getY(), getWidth(), getHeight(), null);
         
         //draw cars
         int i = 0;
@@ -135,11 +133,9 @@ public class Road {
             if(car.getX() > Game.WIDTH) {
                 cars.remove(this);
                 car.setX(new Random().nextInt(1000) - (Game.WIDTH + 500));
-                car.setxSpeed(0);
                 float r = new Random().nextFloat();
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
-                car.setColor(new Color(r, g, b));
             }
             car.moveRight(Game.WIDTH, Game.HEIGHT);
             i++;
@@ -152,11 +148,9 @@ public class Road {
             if (car.getX() + car.getWidth() < (Game.WIDTH - Game.WIDTH)) {
                 cars2.remove(this);
                 car.setX(new Random().nextInt(200) + (Game.WIDTH));
-                car.setxSpeed(0);
                 float r = new Random().nextFloat();
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
-                car.setColor(new Color(r, g, b));
             }
             car.moveLeft(Game.WIDTH, Game.HEIGHT);
             j++;

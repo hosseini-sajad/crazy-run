@@ -4,6 +4,7 @@ package crazyrun;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,14 +14,16 @@ import javax.swing.Timer;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
 
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 800;
         public static final int ROAD_HEIGHT = 220;
-        public static final int RIVER_HEIGHT = 220; 
+        public static final int RIVER_HEIGHT = 400; 
         public static int score = 0;
 	
         // game font
@@ -33,7 +36,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         private ArrayList<Gift> gifts = new ArrayList<>();
         private Timer timer;
         
-        private boolean play = true;
+        private boolean play;
         private boolean hasCollision = false;
         
        
@@ -71,15 +74,23 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+                
 		// ----------game design---------------------
-		setBackground(Color.decode("#cda360"));
+		setBackground(Color.WHITE);
 
                 road.draw(g);
                 river.draw(g);
                 player.draw(g);
                 for(Gift gift : gifts)
                 gift.draw(g);
+                
+                // ----------score design----------------------
+                g.setColor(Color.decode("#40ECFF"));
+                g.fillRect(0, 0, WIDTH, 70);
+                
+                g.setColor(Color.BLACK);
+                g.setFont(gameFont);
+                g.drawString("Score: " + score, 10, 48);
                 
                 //player loses
                 if(hasCollision){
@@ -101,7 +112,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 
                 
                 //player wins
-                if(player.getY() + player.getSize() < river.getY()){
+                if(player.getY() + player.getSize() < 220){
                     play = false;
                     g.setColor(new Color(0, 0, 0, 110));
                     g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -118,18 +129,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                     g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
 
                 }
-		
-
-		// ----------score design----------------------
-		g.setColor(new Color(0, 0, 0, 0));
-                g.fillRect(0, 0, WIDTH, 70);
+                // start place image
+                URL startSign = getClass().getClassLoader().getResource("natureWithBridge2.png");
+                ImageIcon startIcon = new ImageIcon(startSign);
+                Image startImage = startIcon.getImage();
                 
-                g.setColor(Color.BLACK);
-                g.setFont(gameFont);
-                g.drawString("Score: " + score, 10, 48);
+                // after collision start place should be darker
+                g.drawImage(startImage, 0, HEIGHT - 100, 600, 100, null);
+                if (!play) {
+                g.setColor(new Color(0, 0, 0, 110));
+                g.fillRect(0, HEIGHT - 100, WIDTH , 100 );
+            }
                 
-                g.dispose();
-
 	}
 
     @Override

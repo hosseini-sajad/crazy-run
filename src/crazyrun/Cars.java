@@ -8,14 +8,12 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class Cars {
-    private int x;
+    private double x;
     private int y;
     private int width;
     private int height;
-    private Color color;
-    private double xSpeed;
-    private int xSpeedLeft = 8;
-    private int xSpeedRight = 8;
+    private int xSpeedLeft = 10;
+    private int xSpeedRight = 10;
     private boolean isRight = true;
 
     public boolean isIsRight() {
@@ -31,23 +29,13 @@ public class Cars {
         setY(y);
         setWidth(width);
         setHeight(height);
-        setColor(color);
-        setxSpeed(0);
     }
 
-    public double getxSpeed() {
-        return xSpeed;
-    }
-
-    public void setxSpeed(double xSpeed) {
-        this.xSpeed = xSpeed;
-    }
-
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -57,14 +45,6 @@ public class Cars {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public int getWidth() {
@@ -102,31 +82,38 @@ public class Cars {
     public void draw(Graphics g) {
         URL iconUrl;
         if (isRight) {
-            iconUrl = getClass().getClassLoader().getResource("sport-carR.png");
-        }else{
-            iconUrl = getClass().getClassLoader().getResource("sport-carL.png");
-        }
+            iconUrl = getClass().getClassLoader().getResource("car6.gif");
             if (iconUrl != null) {
                 ImageIcon icon = new ImageIcon(iconUrl);
                 Image image = icon.getImage();
-                g.drawImage(image, x, y, 100, 50, null);
+                g.drawImage(image, (int) x, y, 120, 100, null);
             } else {
-                g.setColor(getColor());
-                g.fillRect(getX(), getY(), getWidth(), getHeight());
+                g.setColor(Color.BLUE);
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
             }
+        }
+        else{
+            iconUrl = getClass().getClassLoader().getResource("sport-carL.png");
+            if (iconUrl != null) {
+                ImageIcon icon = new ImageIcon(iconUrl);
+                Image image = icon.getImage();
+                g.drawImage(image, (int) x, y, 100, 50, null);
+            } else {
+                g.setColor(Color.GRAY);
+                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+            }
+        }
     }
     
     public void moveRight(int gameWidth, int gameHeight) {
-        xSpeed += 0.1;
         x += getxSpeedRight();
     }
     
     public void moveLeft(int gameWidth, int gameHeight) {
-        xSpeed += 0.1;
         x -= getxSpeedLeft();
     }
     
     public Rectangle getBound() {
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+        return new Rectangle((int) getX(), getY(), getWidth(), getHeight());
     }
 }
