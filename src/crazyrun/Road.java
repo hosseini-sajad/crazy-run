@@ -32,7 +32,7 @@ public class Road {
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
                 Cars car = new Cars(new Random().nextInt(590)
-                        , new Random().nextInt(40) + 420
+                        , new Random().nextInt(30) + 470
                         , 100
                         , 50
                         , new Color(r, g, b));
@@ -157,4 +157,3 @@ public class Road {
         }
     }
 }
-//(Game.WIDTH - 450)- (Game.WIDTH + 80) - 430

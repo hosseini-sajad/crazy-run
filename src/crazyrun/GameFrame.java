@@ -21,7 +21,7 @@ public class GameFrame extends JFrame {
 		
 		pack();
 		
-		setTitle("Bouncing Ball Game...");
+		setTitle("Crazy Run");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
                 
@@ -49,7 +49,7 @@ public class GameFrame extends JFrame {
 
             try
             {
-                InputStream test = new FileInputStream("C:\\Users\\Amir\\Downloads\\Music\\music.wav");
+                InputStream test = new FileInputStream("C:\\Users\\Amir\\Downloads\\Music\\music2.wav");
                 BGM = new AudioStream(test);
                 AudioPlayer.player.start(BGM);
                 //MD = BGM.getData();

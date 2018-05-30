@@ -82,11 +82,11 @@ public class Cars {
     public void draw(Graphics g) {
         URL iconUrl;
         if (isRight) {
-            iconUrl = getClass().getClassLoader().getResource("car6.gif");
+            iconUrl = getClass().getClassLoader().getResource("car3.gif");
             if (iconUrl != null) {
                 ImageIcon icon = new ImageIcon(iconUrl);
                 Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 120, 100, null);
+                g.drawImage(image, (int) x, y, 100, 50, null);
             } else {
                 g.setColor(Color.BLUE);
                 g.fillRect((int) getX(), getY(), getWidth(), getHeight());
@@ -114,6 +114,6 @@ public class Cars {
     }
     
     public Rectangle getBound() {
-        return new Rectangle((int) getX(), getY(), getWidth(), getHeight());
+        return new Rectangle((int) getX(), getY() + 20 , getWidth() - 10, getHeight() - 20);
     }
 }

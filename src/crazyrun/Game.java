@@ -1,6 +1,5 @@
 package crazyrun;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -20,128 +19,140 @@ import javax.swing.ImageIcon;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
 
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 800;
-        public static final int ROAD_HEIGHT = 220;
-        public static final int RIVER_HEIGHT = 400; 
-        public static int score = 0;
-	
-        // game font
-        Font gameFont = new Font("Press Start 2P", Font.BOLD, 18);
-        
-	// game objects
-	private Player player;
-        private River river;
-        private Road road;   
-        private ArrayList<Gift> gifts = new ArrayList<>();
-        private Timer timer;
-        
-        private boolean play;
-        private boolean hasCollision = false;
-        
-       
-	public Game() {
-		player = new Player(280, 760, 40, Color.WHITE);
-                road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
-                river = new River(0, 70 ,WIDTH,RIVER_HEIGHT, Color.decode("#008dc7"));
-                for (int i = 0; i < 3; i++) {
-                Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
-                gifts.add(gift);
-                play = true;
-            }
-                
-                timer = new Timer(30, this);
-		timer.start();
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 800;
+    public static final int ROAD_HEIGHT = 220;
+    public static final int RIVER_HEIGHT = 400;
+    public static int score = 0;
 
-                setFocusable(true);
-		addKeyListener(this);
-	}
+    // game font
+    Font gameFont = new Font("Press Start 2P", Font.BOLD, 18);
+
+    // game objects
+    private Player player;
+    private River river;
+    private Road road;
+    private ArrayList<Gift> gifts = new ArrayList<>();
+    private Timer timer;
+    public static GameState state = GameState.MENU;
+    private boolean play;
+    private boolean hasCollision = false;
+    private Menu menu;
+
+    public Game() {
         
-        public void restart() {
-            player = new Player(280, 760, 40, Color.WHITE);
-            road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
-            river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
-            for (int i = 0; i < 3; i++) {
-                Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
-                gifts.add(gift);
-                play = true;
-                score = 0;
-                hasCollision = false;
+        menu = new Menu();
+        
+        player = new Player(280, 760, 20, 65, Color.WHITE);
+        road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
+        river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
+        
+        for (int i = 0; i < 3; i++) {
+            Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
+            gifts.add(gift);
+            play = true;
+        }
+
+        timer = new Timer(30, this);
+        timer.start();
+
+        setFocusable(true);
+        addKeyListener(this);
+        addMouseListener(new MouseInput());
+    }
+
+    public void restart() {
+        player = new Player(280, 760, 20, 65, Color.WHITE);
+        road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
+        river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
+        for (int i = 0; i < 3; i++) {
+            Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
+            gifts.add(gift);
+            play = true;
+            score = 0;
+            hasCollision = false;
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (state == GameState.GAME) {
+            // ----------game design---------------------
+            setBackground(Color.WHITE);
+
+            road.draw(g);
+            river.draw(g);
+            //player.draw(g);
+            for (Gift gift : gifts) {
+                gift.draw(g);
+            }
+
+            // ----------score design----------------------
+            g.setColor(Color.decode("#40ECFF"));
+            g.fillRect(0, 0, WIDTH, 70);
+
+            g.setColor(Color.BLACK);
+            g.setFont(gameFont);
+            g.drawString("Score: " + score, 10, 48);
+
+            // start place image
+            URL startSign = getClass().getClassLoader().getResource("natureWithBridge2.png");
+            ImageIcon startIcon = new ImageIcon(startSign);
+            Image startImage = startIcon.getImage();
+
+            // after collision start place should be darker
+            g.drawImage(startImage, 0, HEIGHT - 100, 600, 100, null);
+            if (!play) {
+                g.setColor(new Color(0, 0, 0, 110));
+                g.fillRect(0, HEIGHT - 100, WIDTH, 100);
+            }
+            player.draw(g);
+            //player loses
+            if (hasCollision) {
+                play = false;
+
+                g.setColor(new Color(0, 0, 0, 170));
+                g.fillRect(0, 0, WIDTH, HEIGHT);
+
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Oswald", Font.BOLD, 62));
+                g.drawString("Game Over!", 165, HEIGHT / 2 - 35);
+
+                g.setFont(new Font("tahoma", Font.BOLD, 22));
+                g.drawString("Your Score : " + score, 225, HEIGHT / 2);
+
+                g.setFont(new Font("tahoma", Font.BOLD, 20));
+                g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
+            }
+
+            //player wins
+            if (player.getY() + player.getPlayerHeight() < 170) {
+                play = false;
+                g.setColor(new Color(0, 0, 0, 110));
+                g.fillRect(0, 0, WIDTH, HEIGHT);
+
+                g.setColor(Color.decode("#00ff00"));
+                g.setFont(new Font("Oswald", Font.BOLD, 64));
+                g.drawString("You Won!", 185, HEIGHT / 2 - 35);
+
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("tahoma", Font.BOLD, 22));
+                g.drawString("Your Score : " + score, 225, HEIGHT / 2);
+
+                g.setFont(new Font("tahoma", Font.BOLD, 20));
+                g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
+
             }
         }
         
-        
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-                
-		// ----------game design---------------------
-		setBackground(Color.WHITE);
+        else if(state == GameState.MENU){
+            setBackground(Color.GRAY);
+            menu.render(g);
+        }
 
-                road.draw(g);
-                river.draw(g);
-                player.draw(g);
-                for(Gift gift : gifts)
-                gift.draw(g);
-                
-                // ----------score design----------------------
-                g.setColor(Color.decode("#40ECFF"));
-                g.fillRect(0, 0, WIDTH, 70);
-                
-                g.setColor(Color.BLACK);
-                g.setFont(gameFont);
-                g.drawString("Score: " + score, 10, 48);
-                
-                //player loses
-                if(hasCollision){
-                    play = false;
-                    
-                    g.setColor(new Color(0, 0, 0, 170));
-                    g.fillRect(0, 0, WIDTH, HEIGHT);
-                    
-                    g.setColor(Color.WHITE);
-                    g.setFont(new Font("Oswald", Font.BOLD, 62));
-                    g.drawString("Game Over!", 165 , HEIGHT / 2 - 35);
-                    
-                    g.setFont(new Font("tahoma", Font.BOLD, 22));
-                    g.drawString("Your Score : " + score, 225, HEIGHT / 2 );
-                    
-                    g.setFont(new Font("tahoma", Font.BOLD, 20));
-                    g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29 );
-                }
-                
-                
-                //player wins
-                if(player.getY() + player.getSize() < 220){
-                    play = false;
-                    g.setColor(new Color(0, 0, 0, 110));
-                    g.fillRect(0, 0, WIDTH, HEIGHT);
-
-                    g.setColor(Color.decode("#00ff00"));
-                    g.setFont(new Font("Oswald", Font.BOLD, 64));
-                    g.drawString("You Won!", 185, HEIGHT / 2 - 35);
-
-                    g.setColor(Color.WHITE);
-                    g.setFont(new Font("tahoma", Font.BOLD, 22));
-                    g.drawString("Your Score : " + score, 225, HEIGHT / 2);
-
-                    g.setFont(new Font("tahoma", Font.BOLD, 20));
-                    g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
-
-                }
-                // start place image
-                URL startSign = getClass().getClassLoader().getResource("natureWithBridge2.png");
-                ImageIcon startIcon = new ImageIcon(startSign);
-                Image startImage = startIcon.getImage();
-                
-                // after collision start place should be darker
-                g.drawImage(startImage, 0, HEIGHT - 100, 600, 100, null);
-                if (!play) {
-                g.setColor(new Color(0, 0, 0, 110));
-                g.fillRect(0, HEIGHT - 100, WIDTH , 100 );
-            }
-                
-	}
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -162,8 +173,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             repaint();
         }
     }
-    
-    public void collisionDetection(){
+
+    public void collisionDetection() {
         for (int i = 0; i < river.getCorcodiles().size(); i++) {
             if (player.getBound().intersects(river.getCorcodiles().get(i).getBound())) {
                 hasCollision = true;
@@ -191,26 +202,31 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        
+
     }
-    
+
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_UP)
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
             player.moveUp();
-        if(e.getKeyCode() == KeyEvent.VK_DOWN)
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             player.moveDown();
-        if(e.getKeyCode() == KeyEvent.VK_LEFT)
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             player.moveLeft();
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.moveRight();
+        }
         if (e.getKeyCode() == KeyEvent.VK_ENTER && !play) {
             restart();
         }
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            Game.state = GameState.MENU;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
-    
 }
