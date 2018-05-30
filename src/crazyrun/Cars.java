@@ -93,7 +93,7 @@ public class Cars {
             }
         }
         else{
-            iconUrl = getClass().getClassLoader().getResource("sport-carL.png");
+            iconUrl = getClass().getClassLoader().getResource("cabriolet.gif");
             if (iconUrl != null) {
                 ImageIcon icon = new ImageIcon(iconUrl);
                 Image image = icon.getImage();
@@ -114,6 +114,6 @@ public class Cars {
     }
     
     public Rectangle getBound() {
-        return new Rectangle((int) getX(), getY() + 20 , getWidth() - 10, getHeight() - 20);
+        return new Rectangle((int) getX(), getY() + 30 , getWidth() - 10, getHeight() - 30);
     }
 }

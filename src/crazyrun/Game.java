@@ -60,6 +60,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         addMouseListener(new MouseInput());
     }
+    
 
     public void restart() {
         player = new Player(280, 760, 20, 65, Color.WHITE);
@@ -116,10 +117,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 g.setColor(new Color(0, 0, 0, 170));
                 g.fillRect(0, 0, WIDTH, HEIGHT);
 
-                g.setColor(Color.WHITE);
+                g.setColor(Color.RED);
                 g.setFont(new Font("Oswald", Font.BOLD, 62));
                 g.drawString("Game Over!", 165, HEIGHT / 2 - 35);
 
+                g.setColor(Color.WHITE);
                 g.setFont(new Font("tahoma", Font.BOLD, 22));
                 g.drawString("Your Score : " + score, 225, HEIGHT / 2);
 
@@ -128,7 +130,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             }
 
             //player wins
-            if (player.getY() + player.getPlayerHeight() < 170) {
+            if (player.getY() + player.getPlayerHeight() < 210) {
                 play = false;
                 g.setColor(new Color(0, 0, 0, 110));
                 g.fillRect(0, 0, WIDTH, HEIGHT);
