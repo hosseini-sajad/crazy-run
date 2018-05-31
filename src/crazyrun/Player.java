@@ -24,6 +24,14 @@ public class Player {
         setPlayerHeight(height);
         setColor(color);
     }
+    
+     public int getySpeed() {
+        return ySpeed;
+    }
+
+    public void setySpeed(int ySpeed) {
+        this.ySpeed = ySpeed;
+    }
 
     public int getPlayerWidth() {
         return playerWidth;

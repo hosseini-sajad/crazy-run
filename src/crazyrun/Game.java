@@ -247,7 +247,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_M){
             Game.state = GameState.MENU;
         }
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && !isPaused){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && !isPaused && play){
 
             isPaused = true;
             
@@ -263,6 +263,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             for (int j = 0; j < river.getCorcodiles2().size(); j++) {
                 river.getCorcodiles2().get(j).setxSpeed(0);
             }
+            
+            player.setxSpeed(0);
+            player.setySpeed(0);
             
         }
         if(e.getKeyCode() == KeyEvent.VK_P && isPaused){
@@ -282,6 +285,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 river.getCorcodiles2().get(j).setxSpeed(5);
             }
             
+            player.setxSpeed(10);
+            player.setySpeed(10);
         }
     }
 
