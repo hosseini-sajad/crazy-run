@@ -8,7 +8,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class Corcodile {
-    
+
     private int width;
     private int height;
     private Color color;
@@ -73,51 +73,43 @@ public class Corcodile {
         this.xSpeed = xSpeed;
     }
 
-    public Corcodile(int width , int height , int x , int y , Color color){
+    public Corcodile(int width, int height, int x, int y, Color color) {
         setWidth(width);
         setHeight(height);
         setColor(color);
-        setxSpeed(xSpeed);
         setX(x);
         setY(y);
     }
-    
-    public void draw(Graphics g){
-         URL iconUrl;
+
+    public void draw(Graphics g) {
+        URL iconUrl;
+        
         if (isRight) {
             iconUrl = getClass().getClassLoader().getResource("corcodile.png");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 32, null);
-            } else {
-                g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
-        }
-        else{
+        } else {
             iconUrl = getClass().getClassLoader().getResource("corcodile2.png");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 32, null);
-            } else {
-                g.setColor(getColor());
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
         }
-        
+
+        if (iconUrl != null) {
+            ImageIcon icon = new ImageIcon(iconUrl);
+            Image image = icon.getImage();
+            g.drawImage(image, (int) x, y, 100, 32, null);
+        } else {
+            g.setColor(getColor());
+            g.fillRect((int) getX(), getY(), getWidth(), getHeight());
+        }
+
     }
-    
-    public void moveRight(int riverWidth , int riverHeight){
-           x += xSpeed;
+
+    public void moveRight(int riverWidth, int riverHeight) {
+        x += xSpeed;
     }
-    
-    public void moveLeft(int riverWidth , int riverHeight){
-           x -= xSpeed;
+
+    public void moveLeft(int riverWidth, int riverHeight) {
+        x -= xSpeed;
     }
-    
-    public Rectangle getBound(){
+
+    public Rectangle getBound() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 }

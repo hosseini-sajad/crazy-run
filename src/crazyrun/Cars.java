@@ -8,6 +8,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class Cars {
+
     private double x;
     private int y;
     private int width;
@@ -78,42 +79,35 @@ public class Cars {
     public void setxSpeedRight(int xSpeedRight) {
         this.xSpeedRight = xSpeedRight;
     }
-    
+
     public void draw(Graphics g) {
         URL iconUrl;
+        
         if (isRight) {
             iconUrl = getClass().getClassLoader().getResource("car3.gif");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 50, null);
-            } else {
-                g.setColor(Color.BLUE);
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
-        }
-        else{
+        } else {
             iconUrl = getClass().getClassLoader().getResource("cabriolet.gif");
-            if (iconUrl != null) {
-                ImageIcon icon = new ImageIcon(iconUrl);
-                Image image = icon.getImage();
-                g.drawImage(image, (int) x, y, 100, 50, null);
-            } else {
-                g.setColor(Color.GRAY);
-                g.fillRect((int) getX(), getY(), getWidth(), getHeight());
-            }
+        }
+        
+        if (iconUrl != null) {
+            ImageIcon icon = new ImageIcon(iconUrl);
+            Image image = icon.getImage();
+            g.drawImage(image, (int) x, y, 100, 50, null);
+        } else {
+            g.setColor(Color.GRAY);
+            g.fillRect((int) getX(), getY(), getWidth(), getHeight());
         }
     }
-    
+
     public void moveRight(int gameWidth, int gameHeight) {
         x += getxSpeedRight();
     }
-    
+
     public void moveLeft(int gameWidth, int gameHeight) {
         x -= getxSpeedLeft();
     }
-    
+
     public Rectangle getBound() {
-        return new Rectangle((int) getX(), getY() + 30 , getWidth() - 10, getHeight() - 30);
+        return new Rectangle((int) getX(), getY() + 30, getWidth() - 10, getHeight() - 30);
     }
 }

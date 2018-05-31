@@ -38,6 +38,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean play;
     private boolean hasCollision = false;
     private Menu menu;
+    private boolean isPaused = false;
 
     public Game() {
         
@@ -97,14 +98,22 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             g.setColor(Color.BLACK);
             g.setFont(gameFont);
             g.drawString("Score: " + score, 10, 48);
+            
+            //grass
+            g.setColor(Color.yellow);
+            g.fillRect(0, HEIGHT - 150, WIDTH, 120);
+            URL grass = getClass().getClassLoader().getResource("grass.png");
+            ImageIcon grassIcon = new ImageIcon(grass);
+            Image grassImage = grassIcon.getImage();
+            g.drawImage(grassImage, 0, HEIGHT - 150 , WIDTH, 120, null);
 
             // start place image
             URL startSign = getClass().getClassLoader().getResource("natureWithBridge2.png");
             ImageIcon startIcon = new ImageIcon(startSign);
             Image startImage = startIcon.getImage();
-
-            // after collision start place should be darker
             g.drawImage(startImage, 0, HEIGHT - 100, 600, 100, null);
+            // after collision start place should be darker
+            
             if (!play) {
                 g.setColor(new Color(0, 0, 0, 110));
                 g.fillRect(0, HEIGHT - 100, WIDTH, 100);
@@ -147,6 +156,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
 
             }
+            
+            // paused
+            if (isPaused) {
+                g.setColor(new Color(0, 0, 0, 170));
+                g.fillRect(0, 0, WIDTH, HEIGHT);
+
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Oswald", Font.BOLD, 62));
+                g.drawString("Paused!", 205, HEIGHT / 2 - 35);
+            }
+            
+            
         }
         
         else if(state == GameState.MENU){
@@ -223,8 +244,45 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_ENTER && !play) {
             restart();
         }
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        if(e.getKeyCode() == KeyEvent.VK_M){
             Game.state = GameState.MENU;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && !isPaused){
+
+            isPaused = true;
+            
+            for (int i = 0; i < road.getCars().size(); i++) {
+                road.getCars().get(i).setxSpeedRight(0);
+            }
+            for (int j = 0; j < road.getCars2().size(); j++) {
+                road.getCars2().get(j).setxSpeedLeft(0);
+            }
+            for (int i = 0; i < river.getCorcodiles().size(); i++) {
+                river.getCorcodiles().get(i).setxSpeed(0);
+            }
+            for (int j = 0; j < river.getCorcodiles2().size(); j++) {
+                river.getCorcodiles2().get(j).setxSpeed(0);
+            }
+            
+        }
+        if(e.getKeyCode() == KeyEvent.VK_P && isPaused){
+            
+            isPaused = false;
+            
+            for (int i = 0; i < road.getCars().size(); i++) {
+                road.getCars().get(i).setxSpeedRight(10);
+            }
+            for (int j = 0; j < road.getCars2().size(); j++) {
+                road.getCars2().get(j).setxSpeedLeft(10);
+            }
+            for (int i = 0; i < river.getCorcodiles().size(); i++) {
+                river.getCorcodiles().get(i).setxSpeed(5);
+            }
+            for (int j = 0; j < river.getCorcodiles2().size(); j++) {
+                river.getCorcodiles2().get(j).setxSpeed(5);
+            }
+            
+        }
     }
 
     @Override
