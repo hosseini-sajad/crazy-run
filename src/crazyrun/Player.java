@@ -114,13 +114,13 @@ public class Player {
     }
 
     public void moveLeft() {
-        if (getX() > 0) {
+        if (getX() > 8) {
             x -= getxSpeed();
         }
     }
 
     public void moveRight() {
-        if (getX() + getPlayerWidth() < Game.WIDTH) {
+        if (getX() + getPlayerWidth() < Game.WIDTH - 8) {
             x += getxSpeed();
         }
     }

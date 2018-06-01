@@ -16,8 +16,8 @@ public class Road {
     private Color color; 
 
     
-    private ArrayList<Cars> cars = new ArrayList<>();
-    private ArrayList<Cars> cars2 = new ArrayList<>();
+    private ArrayList<Car> cars = new ArrayList<>();
+    private ArrayList<Car> cars2 = new ArrayList<>();
 
     public Road(int x, int y, int width, int height, Color color) {
         setX(x);
@@ -31,7 +31,7 @@ public class Road {
                 float r = new Random().nextFloat();
                 float g = new Random().nextFloat();
                 float b = new Random().nextFloat();
-                Cars car = new Cars(new Random().nextInt(590)
+                Car car = new Car(new Random().nextInt(590)
                         , new Random().nextInt(30) + 470
                         , 100
                         , 50
@@ -44,7 +44,7 @@ public class Road {
                     float r = new Random().nextFloat();
                     float g = new Random().nextFloat();
                     float b = new Random().nextFloat();
-                    Cars car2 = new Cars(new Random().nextInt(590)
+                    Car car2 = new Car(new Random().nextInt(590)
                             , new Random().nextInt(30) + 570
                             , 100
                             , 50
@@ -94,11 +94,11 @@ public class Road {
         this.color = color;
     }
 
-    public ArrayList<Cars> getCars() {
+    public ArrayList<Car> getCars() {
         return cars;
     }
 
-    public ArrayList<Cars> getCars2() {
+    public ArrayList<Car> getCars2() {
         return cars2;
     }
     
@@ -110,26 +110,21 @@ public class Road {
         g.drawImage(image, getX(), getY(), getWidth(), getHeight(), null);
         
         //draw cars
-        int i = 0;
-        for (Cars car : cars) {
+        for (Car car : cars) {
             car.setIsRight(true);
             car.draw(g);
-            i++;
         }
         
-        int j = 0;
-        for (Cars car : cars2) {
+        for (Car car : cars2) {
             car.setIsRight(false);
             car.draw(g);
-            j++;
         }
     }
     
     public void move() {
         //move right
         //check if cars went out of page remove it and back with new (x)
-        int i = 0;
-        for (Cars car : cars) {
+        for (Car car : cars) {
             if(car.getX() > Game.WIDTH) {
                 cars.remove(this);
                 car.setX(new Random().nextInt(1000) - (Game.WIDTH + 500));
@@ -138,13 +133,11 @@ public class Road {
                 float b = new Random().nextFloat();
             }
             car.moveRight(Game.WIDTH, Game.HEIGHT);
-            i++;
         }
 
         //move left
         //check if cars went out of page remove it and back with new (x)
-        int j = 0;
-        for (Cars car : cars2) {
+        for (Car car : cars2) {
             if (car.getX() + car.getWidth() < (Game.WIDTH - Game.WIDTH)) {
                 cars2.remove(this);
                 car.setX(new Random().nextInt(200) + (Game.WIDTH));
@@ -153,7 +146,6 @@ public class Road {
                 float b = new Random().nextFloat();
             }
             car.moveLeft(Game.WIDTH, Game.HEIGHT);
-            j++;
         }
     }
 }

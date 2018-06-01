@@ -14,7 +14,7 @@ public class Corcodile {
     private Color color;
     private int x;
     private int y;
-    private double xSpeed = 5;
+    private int xSpeed = 5;
     private boolean isRight;
 
     public boolean isIsRight() {
@@ -65,11 +65,11 @@ public class Corcodile {
         this.y = y;
     }
 
-    public double getxSpeed() {
+    public int getxSpeed() {
         return xSpeed;
     }
 
-    public void setxSpeed(double xSpeed) {
+    public void setxSpeed(int xSpeed) {
         this.xSpeed = xSpeed;
     }
 

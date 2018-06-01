@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -24,6 +25,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     public static final int ROAD_HEIGHT = 220;
     public static final int RIVER_HEIGHT = 400;
     public static int score = 0;
+    public static int level = 1;
+    public static ArrayList<Integer> speeds = new ArrayList<>();
 
     // game font
     Font gameFont = new Font("Press Start 2P", Font.BOLD, 18);
@@ -49,11 +52,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
         
         for (int i = 0; i < 3; i++) {
-            Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
+            Gift gift = new Gift(new Random().nextInt(550)
+                    ,new Random().nextInt(400) + 200
+                    , 30
+                    , 30);
             gifts.add(gift);
-            play = true;
         }
-
+        play = true;
         timer = new Timer(30, this);
         timer.start();
 
@@ -64,16 +69,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     
 
     public void restart() {
+        gifts.removeAll(gifts);
         player = new Player(280, 760, 20, 65, Color.WHITE);
         road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
         river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
         for (int i = 0; i < 3; i++) {
-            Gift gift = new Gift((i + 1) * 100, (i + 1) * 200, 30, 30);
+            Gift gift = new Gift(new Random().nextInt(550)
+                    ,new Random().nextInt(450) + 150
+                    , 30
+                    , 30);
             gifts.add(gift);
+        }
             play = true;
             score = 0;
             hasCollision = false;
-        }
     }
 
     @Override
@@ -99,6 +108,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             g.setFont(gameFont);
             g.drawString("Score: " + score, 10, 48);
             
+            // ----------level design----------------------
+            g.drawString("Level: " + level, 200, 48);
+            
             //grass
             g.setColor(Color.yellow);
             g.fillRect(0, HEIGHT - 150, WIDTH, 120);
@@ -119,10 +131,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 g.fillRect(0, HEIGHT - 100, WIDTH, 100);
             }
             player.draw(g);
+            
             //player loses
             if (hasCollision) {
                 play = false;
-
+                level = 1;
                 g.setColor(new Color(0, 0, 0, 170));
                 g.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -141,6 +154,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             //player wins
             if (player.getY() + player.getPlayerHeight() < 210) {
                 play = false;
+                level++;
                 g.setColor(new Color(0, 0, 0, 110));
                 g.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -153,7 +167,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 g.drawString("Your Score : " + score, 225, HEIGHT / 2);
 
                 g.setFont(new Font("tahoma", Font.BOLD, 20));
-                g.drawString("Please press ENTER key to restart...", 145, HEIGHT / 2 + 29);
+                g.drawString("Please press ENTER key to continue...", 145, HEIGHT / 2 + 29);
 
             }
             
@@ -180,6 +194,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (play) {
+            if(level != 1 && !isPaused){
+                for(Car car : road.getCars())
+                    car.setxSpeedRight(11 + level);
+                
+                for(Car car : road.getCars2())
+                    car.setxSpeedLeft(11 + level);
+                
+                for(Corcodile corcodile : river.getCorcodiles())
+                    corcodile.setxSpeed(6 + level);
+                
+                for(Corcodile corcodile : river.getCorcodiles2())
+                    corcodile.setxSpeed(6 + level);
+            }
             road.move();
             river.Move();
 
@@ -188,6 +215,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 if (player.getBound().intersects(gifts.get(i).getBound())) {
                     gifts.get(i).setPosition(0);
                     gifts.remove(i);
+                    score++;
+                    player.setxSpeed(player.getxSpeed() + 1);
+                    player.setySpeed(player.getySpeed() + 1);
                 }
             }
 
@@ -197,6 +227,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    //check collision between player and enemy
     public void collisionDetection() {
         for (int i = 0; i < river.getCorcodiles().size(); i++) {
             if (player.getBound().intersects(river.getCorcodiles().get(i).getBound())) {
@@ -251,6 +282,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
             isPaused = true;
             
+            //befor pused saved speed
+            speeds.add(0, player.getxSpeed());
+            speeds.add(1, player.getySpeed());
+            speeds.add(2, road.getCars().get(0).getxSpeedRight());
+            speeds.add(3, river.getCorcodiles().get(0).getxSpeed());
+            
             for (int i = 0; i < road.getCars().size(); i++) {
                 road.getCars().get(i).setxSpeedRight(0);
             }
@@ -272,21 +309,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             
             isPaused = false;
             
-            for (int i = 0; i < road.getCars().size(); i++) {
-                road.getCars().get(i).setxSpeedRight(10);
-            }
-            for (int j = 0; j < road.getCars2().size(); j++) {
-                road.getCars2().get(j).setxSpeedLeft(10);
-            }
-            for (int i = 0; i < river.getCorcodiles().size(); i++) {
-                river.getCorcodiles().get(i).setxSpeed(5);
-            }
-            for (int j = 0; j < river.getCorcodiles2().size(); j++) {
-                river.getCorcodiles2().get(j).setxSpeed(5);
-            }
+            player.setxSpeed(speeds.get(0));
+            player.setySpeed(speeds.get(1));
             
-            player.setxSpeed(10);
-            player.setySpeed(10);
+            for(Car car : road.getCars())
+                car.setxSpeedRight(speeds.get(2));
+            for(Car car : road.getCars2())
+                car.setxSpeedLeft(speeds.get(2));
+            for(Corcodile corcodile : river.getCorcodiles())
+                corcodile.setxSpeed(speeds.get(3));
+            for(Corcodile corcodile : river.getCorcodiles2())
+                corcodile.setxSpeed(speeds.get(3));
+            
         }
     }
 

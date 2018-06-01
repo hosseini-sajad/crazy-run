@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
-public class Cars {
+public class Car {
 
     private double x;
     private int y;
@@ -25,7 +25,7 @@ public class Cars {
         this.isRight = isRight;
     }
 
-    public Cars(int x, int y, int width, int height, Color color) {
+    public Car(int x, int y, int width, int height, Color color) {
         setX(x);
         setY(y);
         setWidth(width);
