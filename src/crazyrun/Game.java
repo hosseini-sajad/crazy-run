@@ -309,6 +309,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             
             isPaused = false;
             
+            //read speed and set them.
             player.setxSpeed(speeds.get(0));
             player.setySpeed(speeds.get(1));
             
