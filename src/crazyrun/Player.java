@@ -108,7 +108,7 @@ public class Player {
     }
 
     public void moveDown() {
-        if (getY() < Game.HEIGHT && getY() + getPlayerHeight() != Game.HEIGHT) {
+        if (getY()+ getPlayerHeight() < Game.HEIGHT && getY() + getPlayerHeight() != Game.HEIGHT) {
             y += ySpeed;
         }
     }

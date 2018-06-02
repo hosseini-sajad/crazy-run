@@ -2,10 +2,13 @@ package crazyrun;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import javax.swing.ImageIcon;
 
 public class Gift {
     private int x;
@@ -64,10 +67,12 @@ public class Gift {
     }
 
     public void draw(Graphics g) {
-           if (position == 1) {
-                g.setColor(Color.blue);
-                g.fillRect(getX(), getY(), getWidth(), getHeight());
-            }
+           URL giftUrl;
+           giftUrl = getClass().getClassLoader().getResource("gift1.png");
+           ImageIcon giftIcon = new ImageIcon(giftUrl);
+           Image giftImage = giftIcon.getImage();
+           if(position == 1)
+               g.drawImage(giftImage, getX(), getY(), getWidth(), getHeight(), null);
     }
     
     public Rectangle getBound(){

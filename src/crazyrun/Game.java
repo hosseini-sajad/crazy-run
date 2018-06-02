@@ -70,7 +70,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     public void restart() {
         gifts.removeAll(gifts);
-        player = new Player(280, 760, 20, 65, Color.WHITE);
+        player = new Player(280, 735, 20, 65, Color.WHITE);
         road = new Road(0, 450, WIDTH, ROAD_HEIGHT, Color.decode("#434343"));
         river = new River(0, 70, WIDTH, RIVER_HEIGHT, Color.decode("#008dc7"));
         for (int i = 0; i < 3; i++) {
